@@ -1,1 +1,6 @@
 streamlit
+pandas
+folium
+matplotlib
+mplcursors
+fitparse
