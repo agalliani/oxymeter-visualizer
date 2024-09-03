@@ -1,7 +1,8 @@
 streamlit
 pandas
-folium
+streamlit_folium
 matplotlib
 mplcursors
 fitparse
 plotly
+geopy
