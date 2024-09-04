@@ -27,7 +27,7 @@ def load_fit_data(fit_file):
         records.append(record_data)
     df = pd.DataFrame(records)
     if 'timestamp' in df.columns:
-        df['Datetime'] = pd.to_datetime(df['timestamp'], unit='s')
+        df['Datetime'] = pd.to_datetime(df['timestamp'], unit='s') + pd.Timedelta(hours=2)
     return df
 
 # Funzione per creare una mappa con un percorso
@@ -160,6 +160,10 @@ if uploaded_fit_file is not None:
         st.error(f"Errore durante il caricamento del file FIT: {e}")
 
 if not gps_data.empty or not fit_data.empty:
+    # Sincronizza i dati solo se entrambi i file sono caricati
+    if not gps_data.empty and not fit_data.empty:
+        combined_data = pd.merge(gps_data, fit_data, on='Datetime', how='outer')
+
     selected_plots = st.multiselect(
         'Seleziona i grafici da visualizzare:',
         ['Grafico dell\'ossigeno nel tempo', 'Grafico del battito cardiaco nel tempo', 
